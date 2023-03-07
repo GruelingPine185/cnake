@@ -12,6 +12,9 @@ UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
 	CSTD = gnu11
 endif
+ifeq ($(UNAME_S), Darwin)
+	INSTALL_FOLDER = /usr/local/bin
+endif
 
 CC     = gcc
 CFLAGS = -O2 -std=$(CSTD) -Wall -Wextra -Werror -pedantic -Wno-deprecated-declarations
@@ -30,7 +33,8 @@ $(BIN):
 install: $(OUT)
 	cp $(OUT) $(INSTALL)
 	cp -r ./res/cnake_assets $(INSTALL_FOLDER)/
-
+uninstall:
+	rm -rf $(INSTALL_FOLDER)/cnake $(INSTALL_FOLDER)/cnake_assets/
 clean:
 	rm -r $(BIN)/*
 
